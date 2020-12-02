@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+from functools import lru_cache
+with open('day02.data') as fp:
+   lines = fp.readlines()
+
+
+@lru_cache(maxsize=256)
+def validpass(line):
+    # format 8-9 x: xxxxxxxrk
+    (code, password) = line.split(':')
+    (num, tecken) = code.split(' ')
+    (first,second) = num.split('-')
+    (low,high) = [int(x) for x in num.split('-')]
+    teckencount = len([x for x in password if tecken in x])
+    if teckencount >= int(low):
+        if teckencount <= int(high):
+            return True
+    return False
+
+validcount = 0
+for line in lines:
+    if validpass(line):
+        validcount += 1
+print(f"Total valid: {validcount}")
