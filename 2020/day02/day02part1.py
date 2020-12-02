@@ -1,10 +1,7 @@
 #!/usr/bin/env python
-from functools import lru_cache
 with open('day02.data') as fp:
    lines = fp.readlines()
 
-
-@lru_cache(maxsize=256)
 def validpass(line):
     # format 8-9 x: xxxxxxxrk
     (code, password) = line.split(':')
