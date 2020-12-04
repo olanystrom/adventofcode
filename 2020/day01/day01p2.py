@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-with open('day001.data') as fp:
-   lines = fp.readlines()
-
-lines = [int(x.strip()) for x in lines] 
+with open(os.path.join(sys.path[0], 'day01.data') as fp:
+   lines = [int(x.strip()) for x in fp.readlines()]
 
 for line in lines:
     for line2 in lines:
