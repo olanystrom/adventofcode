@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 with open('day02.data') as fp:
-   lines = fp.readlines()
+   lines = [x.strip() for x in fp.readlines()]
 
 def validpass(line):
     # format 8-9 x: xxxxxxxrk
@@ -9,8 +9,7 @@ def validpass(line):
     (first,second) = num.split('-')
     (low,high) = [int(x) for x in num.split('-')]
     teckencount = len([x for x in password if tecken in x])
-    if teckencount >= int(low):
-        if teckencount <= int(high):
+    if int(low) <= (teckencount) <= int(high):
             return True
     return False
 
