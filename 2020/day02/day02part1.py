@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-with open('day02.data') as fp:
+import os
+import sys
+with open(os.path.join(sys.path[0], 'day02.data')) as fp:
    lines = [x.strip() for x in fp.readlines()]
 
 def validpass(line):
