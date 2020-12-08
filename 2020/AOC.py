@@ -4,11 +4,13 @@ import sys
 
 _startTime = None
 
-def loadInput(day):
+def loadInput(day = None, filename = False):
     global _startTime
 
-    day = str(day)
-    filename = "day" + day.zfill(2) + ".data"
+    if day:
+        day = str(day)
+    if not filename:
+        filename = "day" + day.zfill(2) + ".data"
     filepath = (os.path.join(sys.path[0],filename))
 
     with open(filepath) as f:

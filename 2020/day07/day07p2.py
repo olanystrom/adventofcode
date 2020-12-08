@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-sys.path.insert(1, '..')
+sys.path.insert(1, sys.path[0] + '/..')  # Add parent of my directory to path
 import AOC
 lines = AOC.loadInput(7)
 
