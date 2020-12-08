@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-import os
 import sys
-with open(os.path.join(sys.path[0],'day08.data')) as fp:
-   lines = [x.strip() for x in fp.readlines()]
-
+sys.path.insert(1, '..')
+import AOC
+lines = AOC.loadInput(8)
 
 currentline = 0
 acc = 0
@@ -24,3 +23,5 @@ while True:
     else:
         print(f"Unexpected command {command}")
         break
+
+AOC.printTimeTaken()

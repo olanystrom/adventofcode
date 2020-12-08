@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-import os
 import sys
-with open(os.path.join(sys.path[0],'day07.data')) as fp:
-   lines = [x.strip() for x in fp.readlines()]
+sys.path.insert(1, '..')
+import AOC
+lines = AOC.loadInput(7)
 
 bags = dict()
 MYBAG = "shiny gold"
@@ -28,3 +28,5 @@ def num_bags(amount,mybag):
     return amount + amount*total
         
 print(num_bags(0,MYBAG))
+
+AOC.printTimeTaken()

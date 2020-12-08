@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-import os
 import sys
-with open(os.path.join(sys.path[0],'day08.data')) as fp:
-   lines = [x.strip() for x in fp.readlines()]
+sys.path.insert(1, '..')
+import AOC
+lines = AOC.loadInput(8)
 
 def bootsuccess():
     currentline = 0
@@ -28,20 +28,19 @@ def bootsuccess():
             print(f"Unexpected command {command}")
             break
 
-if bootsuccess():
-    end()
-
 for (num,line) in enumerate(lines):
     (command, arg) = line.split()
     if command == "nop":
         lines[num] = f"jmp {arg}"
         if bootsuccess():
-            print(f"jmp at line: {num}")
+            print(f"{command} at line: {num}")
             break
         lines[num] = f"nop {arg}"
     elif command == "jmp":
         lines[num] = f"nop {arg}"
         if bootsuccess():
-            print(f"jmp at line: {num}")
+            print(f"{command} at line: {num}")
             break
         lines[num] = f"jmp {arg}"
+
+AOC.printTimeTaken()
