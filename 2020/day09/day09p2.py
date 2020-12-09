@@ -26,17 +26,22 @@ def xmas_hack(num,buffer):
             print(f"{_min} + {_max} = {_min+_max}")
             return
 
-def xmas_hack2(num,buffer):
-    for i in range(len(buffer) - 1):
-        _sum = buffer[i]
-        _list = [buffer[i]]
-        j = i + 1
-        while _sum + buffer[j] <= num:
-            _sum += buffer[j]
-            _list.append(buffer[j])
-            j += 1
-        if _sum == num:
+# Inspired by the redditthread
+# moving window
+def xmas_hack3(num,buffer):
+    start = 0; end = 1;
+    _sum = sum(buffer[start:end+1])
+    while True:
+        if _sum > num:
+            _sum -= buffer[start]
+            start += 1
+        elif _sum < num:
+            end += 1
+            _sum += buffer[end]
+        else:
+            _list = buffer[start:end]
             print(min(_list) + max(_list))
+            return
 
 for num,line in enumerate(lines):
     if num < preamble:
@@ -44,5 +49,5 @@ for num,line in enumerate(lines):
     else:
         if not xmas_check(line,lines[num-preamble:num]):
             print(f"xmas failed at line {num} with {line}")
-            xmas_hack2(line,lines[0:num])
+            xmas_hack3(line,lines[0:num])
 AOC.printTimeTaken()
