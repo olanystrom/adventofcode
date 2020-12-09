@@ -2,7 +2,7 @@
 import sys
 sys.path.insert(1, sys.path[0] + '/..')  # Add parent of my directory to path
 from itertools import combinations
-import AOC
+import AOC  ## pylint: disable=import-error
 lines = AOC.loadInput(9)
 
 preamble = 25
@@ -29,7 +29,7 @@ def xmas_hack(num,buffer):
 # Inspired by the redditthread
 # moving window
 def xmas_hack3(num,buffer):
-    start = 0; end = 1;
+    start = 0; end = 1
     _sum = sum(buffer[start:end+1])
     while True:
         if _sum > num:
