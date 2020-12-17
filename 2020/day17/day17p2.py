@@ -17,6 +17,13 @@ During a cycle, all cubes simultaneously change their state according to the fol
 * If a cube is inactive but exactly 3 of its neighbors are active, the cube becomes active. Otherwise, the cube remains inactive.
 """
 
+"""
+Optimized by realizing
+https://www.reddit.com/r/adventofcode/comments/keqsfa/2020_day_17_solutions/gg4kmh3/?utm_source=reddit&utm_medium=web2x&context=3
+The idea is to maintain a set of active positions and to realize that inactive positions can only be promoted to active positions
+if they are neighbors of at least one of the current active positions.
+"""
+
 class CCubes():
     def __init__(self,world, dim):
         self.world = set()
