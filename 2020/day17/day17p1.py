@@ -8,7 +8,7 @@ lines = AOC.loadInput(None,'day17.data')
 
 """ Day 17: Conway Cubes """
 
-#lines = [".#.", "..#", "###"] ## TEST t1 (x, y )
+# lines = [".#.", "..#", "###"] ## TEST t1 (x, y )
 
 """
 During a cycle, all cubes simultaneously change their state according to the following rules:
@@ -40,6 +40,12 @@ class CCubes():
                     xyz = tuple(list((x,y)) + [0] * (dim-2))
                     self.set(xyz)
 
+    def checknodes(self, world):
+        cmatrix = set(itertools.product((1,0,-1),repeat=self.dim))
+        for (x,y,z) in world:
+            for (i,j,k) in cmatrix:
+                yield (x+i, y+j, z+k)
+
     def around3d(self, myxyz, world):
         count = 0;
         (x,y,z) = myxyz
@@ -55,7 +61,7 @@ class CCubes():
         """
         oldworld = self.world.copy()
         # print(oldworld)
-        for a in itertools.product(range((-self.n),(self.n+1)), repeat=self.dim):
+        for a in set(self.checknodes(oldworld)):
             around = self.around3d(a, oldworld)
             if a in oldworld:
                 if str(around) not in "23":
@@ -68,17 +74,11 @@ class CCubes():
 
 cubeworld = CCubes(lines, 3)
 
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
 print(len(cubeworld.world))
 

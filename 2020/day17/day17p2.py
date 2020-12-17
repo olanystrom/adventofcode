@@ -2,6 +2,7 @@
 from functools import lru_cache
 import itertools
 import sys
+from pprint import pprint
 sys.path.insert(1, sys.path[0] + '/..')  # Add parent of my directory to path
 import AOC  ## pylint: disable=import-error
 lines = AOC.loadInput(None,'day17.data')
@@ -24,7 +25,6 @@ class CCubes():
         self.n = len(world[0])
         self.checkmatrix = list(itertools.product((1,0,-1),repeat=dim))
         self.checkmatrix.remove((0,) * dim)  # Dont check self/origin
-        # print(f"{len(self.checkmatrix)=}")
 
     def set(self, xyz):
         self.world.add(xyz)
@@ -40,13 +40,11 @@ class CCubes():
                     xyz = tuple(list((x,y)) + [0] * (dim-2))
                     self.set(xyz)
 
-    def around3d(self, myxyz, world):
-        count = 0;
-        (x,y,z) = myxyz
-        for (i,j,k) in self.checkmatrix:
-            if (x+i, y+j, z+k) in world:
-                count +=1
-        return count
+    def checknodes(self, world):
+        cmatrix = set(itertools.product((1,0,-1),repeat=self.dim))
+        for (x,y,z,w) in world:
+            for (i,j,k,l) in cmatrix:
+                yield (x+i, y+j, z+k, w+l)
 
     def around4d(self, myxyz, world):
         count = 0;
@@ -54,6 +52,8 @@ class CCubes():
         for (i,j,k,l) in self.checkmatrix:
             if (x+i, y+j, z+k, w+l) in world:
                 count +=1
+                if count > 3:
+                    return
         return count
 
     def oneround(self):
@@ -62,34 +62,23 @@ class CCubes():
         * If a cube is inactive but exactly 3 of its neighbors are active, the cube becomes active. Otherwise, the cube remains inactive.
         """
         oldworld = self.world.copy()
-        # print(oldworld)
-        for a in itertools.product(range((-self.n),(self.n+1)), repeat=self.dim):
-            if self.dim == 3:
-                around = self.around3d(a, oldworld)
-            elif self.dim == 4:
-                around = self.around4d(a, oldworld)
+        for a in set(self.checknodes(oldworld)):
+            around = self.around4d(a, oldworld)
             if a in oldworld:
                 if not ( around == 2 or around == 3):
                     self.delete(a)
             else:
                 if around == 3:
                     self.set(a)
-        self.n += 1
         return True
 
 cubeworld = CCubes(lines, 4)
 
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
-print(len(cubeworld.world))
 cubeworld.oneround()
 print(len(cubeworld.world))
 
