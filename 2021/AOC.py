@@ -1,10 +1,11 @@
 from time import time
 import os
 import sys
+from typing import List, Union
 
-_startTime = None
+_startTime: float = 0
 
-def loadInput(day = None, filename = False):
+def loadInput(day = None, filename = False) -> List:
     global _startTime
 
     if day:
@@ -20,12 +21,12 @@ def loadInput(day = None, filename = False):
 
     if len(content) == 1:
         try:
-            return int(content[0])
+            return [int(content[0])]
         except:
             try:
                 return [int(i) for i in content[0].split()]
             except:
-                return content[0]
+                return [content[0]]
     else:
         try:
             return [int(i) for i in content]
