@@ -22,9 +22,9 @@ def increased3(input: List) -> int:
     inc = 0
     for i,a in enumerate(input):
         if i > 2:
-            tmp = input[i-1] + input[i-2]
-            last3 = tmp + input[i-3]
-            current3 = input[i] + tmp
+            # tmp = input[i-1] + input[i-2]
+            last3 = input[i-3]  # + tmp
+            current3 = input[i] # + tmp
             if current3 > last3:
                 inc += 1
     return inc
