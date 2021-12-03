@@ -5,7 +5,7 @@ from typing import List, Union
 
 _startTime: float = 0
 
-def loadInput(day = None, filename = False) -> List:
+def loadInput(day = None, filename = False, notInt = False) -> List:
     global _startTime
 
     if day:
@@ -18,6 +18,9 @@ def loadInput(day = None, filename = False) -> List:
         content = [l.rstrip("\n") for l in f.readlines()]
 
     _startTime = time()
+
+    if notInt:
+        return content
 
     if len(content) == 1:
         try:
