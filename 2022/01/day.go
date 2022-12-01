@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"sort"
-	"strconv"
-	"strings"
 )
 
 func main() {
@@ -15,16 +13,8 @@ func main() {
 	fmt.Println("Answer2", Answer2(puzzleInput))
 }
 
-func sum(array []int) int {
-	result := 0
-	for _, v := range array {
-		result += v
-	}
-	return result
-}
-
 func Answer1(puzzleInput string) int {
-	values := makeValues(puzzleInput)
+	values := MakeValues(puzzleInput)
 	maxelf := 0
 	celf := 0
 	for i := 0; i < len(values)-1; i++ {
@@ -41,7 +31,7 @@ func Answer1(puzzleInput string) int {
 }
 
 func Answer2(puzzleInput string) int {
-	values := makeValues(puzzleInput)
+	values := MakeValues(puzzleInput)
 
 	celf := 0
 	maxelf := make([]int, 0)
@@ -59,14 +49,5 @@ func Answer2(puzzleInput string) int {
 	// 	return maxelf[i] < maxelf[j]
 	// })
 	// fmt.Printf("%v", maxelf[len(maxelf)-3:])
-	return sum(maxelf[len(maxelf)-3:])
-}
-
-func makeValues(puzzleInput string) []int {
-	lines := strings.Split(string(puzzleInput), "\n")
-	values := make([]int, len(lines))
-	for i, raw := range lines {
-		values[i], _ = strconv.Atoi(raw)
-	}
-	return values
+	return Sum(maxelf[len(maxelf)-3:])
 }
