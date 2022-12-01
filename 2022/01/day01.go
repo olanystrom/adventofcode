@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -32,7 +31,9 @@ func Answer1(puzzleInput string) int {
 		if values[i] != 0 {
 			celf += values[i]
 		} else {
-			maxelf = int(math.Max(float64(celf), float64(maxelf)))
+			if celf > maxelf {
+				maxelf = celf
+			}
 			celf = 0
 		}
 	}
@@ -53,9 +54,10 @@ func Answer2(puzzleInput string) int {
 		}
 	}
 	maxelf = append(maxelf, celf)
-	sort.Slice(maxelf, func(i, j int) bool {
-		return maxelf[i] < maxelf[j]
-	})
+	sort.Ints(maxelf)
+	// sort.Slice(maxelf, func(i, j int) bool {
+	// 	return maxelf[i] < maxelf[j]
+	// })
 	// fmt.Printf("%v", maxelf[len(maxelf)-3:])
 	return sum(maxelf[len(maxelf)-3:])
 }
