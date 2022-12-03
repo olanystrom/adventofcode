@@ -10,7 +10,7 @@ func main() {
 	bytes, _ := ioutil.ReadFile("input.txt")
 	puzzleInput := string(bytes)
 	fmt.Println("Answer1", Answer1(puzzleInput))
-	// fmt.Println("Answer2", Answer2(puzzleInput))
+	fmt.Println("Answer2", Answer2(puzzleInput))
 }
 
 func Answer1(puzzleInput string) int {
@@ -70,6 +70,49 @@ func compareHands(elf string, you string) int {
 	}
 	return 0
 }
+func compareHands2(elf string, you string) int {
+
+	// A for Rock, B for Paper, and C for Scissors
+	// Rock defeats Scissors  A > C
+	// Scissors defeats Paper C > B
+	// Paper defeats Rock B > A
+
+	//	X means you need to lose,
+	// Y means you need to end the round in a draw
+	// Z means you need to win.
+
+	const WIN int = 0
+	const DRAW int = 3
+	const LOSE int = 6
+
+	switch elf {
+	case "A":
+		if you == "X" {
+			return WIN + strings.Index(" ABC", "C")
+		} else if you == "Y" {
+			return DRAW + strings.Index(" ABC", "A")
+		} else if you == "Z" {
+			return LOSE + strings.Index(" ABC", "B")
+		}
+	case "B":
+		if you == "X" {
+			return WIN + strings.Index(" ABC", "A")
+		} else if you == "Y" {
+			return DRAW + strings.Index(" ABC", "B")
+		} else if you == "Z" {
+			return LOSE + strings.Index(" ABC", "C")
+		}
+	case "C":
+		if you == "X" {
+			return WIN + strings.Index(" ABC", "B")
+		} else if you == "Y" {
+			return DRAW + strings.Index(" ABC", "C")
+		} else if you == "Z" {
+			return LOSE + strings.Index(" ABC", "A")
+		}
+	}
+	return 0
+}
 
 // Anyway, the second column says how the round needs to end:
 // X means you need to lose,
@@ -79,10 +122,11 @@ func compareHands(elf string, you string) int {
 func Answer2(puzzleInput string) int {
 	values := MakeValues(puzzleInput)
 	answer := 0
+	score := 0
 	for i := 0; i < len(values)-1; i++ {
-		if values[i] != 0 {
-		} else {
-		}
+		score = compareHands2(values[i].elf, values[i].you)
+		// fmt.Println(score)
+		answer += score
 	}
 	return answer
 }
