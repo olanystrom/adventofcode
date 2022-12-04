@@ -1,11 +1,30 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"log"
+	_ "net/http/pprof"
 	"os"
+	"runtime/pprof"
 )
 
+var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to `file`")
+
 func main() {
+	flag.Parse()
+	if *cpuprofile != "" {
+		f, err := os.Create(*cpuprofile)
+		if err != nil {
+			log.Fatal("could not create CPU profile: ", err)
+		}
+		defer f.Close() // error handling omitted for example
+		if err := pprof.StartCPUProfile(f); err != nil {
+			log.Fatal("could not start CPU profile: ", err)
+		}
+		defer pprof.StopCPUProfile()
+	}
+
 	bytes, _ := os.ReadFile("input.txt")
 	// bytes, _ := os.ReadFile("test.txt")
 	puzzleInput := string(bytes)

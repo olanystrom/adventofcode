@@ -43,3 +43,19 @@ func MakeValues(puzzleInput string) []sectionspair {
 	}
 	return values
 }
+
+func MakeValuesSscanf(puzzleInput string) []sectionspair {
+	lines := strings.Split(string(puzzleInput), "\n")
+	values := make([]sectionspair, len(lines))
+	var s1, e1, s2, e2 int
+	for i, raw := range lines {
+		if len(raw) > 0 {
+			fmt.Sscanf(raw, "%d-%d,%d-%d", &s1, &e1, &s2, &e2)
+			values[i].start1 = s1
+			values[i].start2 = s2
+			values[i].end1 = e1
+			values[i].end2 = e2
+		}
+	}
+	return values
+}
