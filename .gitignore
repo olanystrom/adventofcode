@@ -1,8 +1,10 @@
 .vscode
 venv/
 *.data
+DATA
 *.pyc
 input
 input.txt
 venv37/
+.python-version
 go.sum
